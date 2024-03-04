@@ -1,0 +1,61 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+    
+}
+.logo{
+    width: 100px;
+
+}
+.logo:hover{
+    cursor: pointer;
+    background-color: aqua;
+}
+.nav-items > ul{
+    display: flex;
+    font-size: 20px;
+    list-style-type: none;
+
+}
+.nav-items > ul > li{
+    padding: 10px;
+    margin: 10px;
+}
+.nav-items > ul > li:hover{
+    cursor: pointer;
+    background-color: rgb(244, 186, 165);
+}
+/* body css start from here */
+.search{
+    padding: 10px;
+}
+.search:hover{
+    cursor: pointer;
+}
+.rest-card{
+    /* height: 400px; */
+    width: 200px;
+    background-color: wheat;
+    padding: 5px;
+    margin: 10px;
+    transition: box-shadow .3s;
+    border-radius:10px;
+    border: 1px solid #ccc;
+    float: left;
+    
+}
+.rest-card:hover{
+    /* border: 1px solid black; */
+    cursor: pointer;
+    /* background-color: rgb(244, 186, 165); */
+    box-shadow: 0 0 15px rgba(33,33,33,100); 
+      
+}
+.res-logo{
+    width: 100%; 
+}
+.rest-container{
+    display: flex;
+    flex-wrap: wrap;  
+}
