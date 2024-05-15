@@ -1,27 +1,53 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-// import Input from './component/Input1.jsx'
-// import { Input1 } from './component/Input1.jsx'
-// import './index.css'
+// we are not using App.jsx here
 import Header from './component/Header.jsx'
 import Body from './component/Body.jsx'
+import About from './component/About.jsx'
+import Contact from './component/Contact.jsx'
+import Error from './component/Error.jsx'
+import {createBrowserRouter,RouterProvider,Outlet } from 'react-router-dom';
 
-const HeadingComponent2 = () => {
+
+const AppLayout = () => {
   return (
-    <>
-      <h1>Good Morning Bacho main</h1>
-      <h2>OMG2</h2>
-    </>
+    <div>
+      <Header/>
+      <Outlet />
+    </div>
   )
-
 }
 
+ const appRouter=createBrowserRouter(
+  [
+    {
+      path:"/", 
+      element:<AppLayout/>,
+      children:[
+        {
+          path:"/about",
+          element:<About/>
+        },
+        {
+          path:"/contact",
+          element:<Contact/>
+        },
+        {
+          path:"/",
+          element:<Body/>
+        }
+    ],
+      errorElement:<Error/>
+    },  
+  ]
+ ); 
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <div>
-    <Header/>
-    <Body/>
-  </div>
-  
-)
+
+// ReactDOM.createRoot(document.getElementById('root')).render(
+//   <div>
+//     <Header/>
+//     <Body/>
+//   </div>
+// )
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(<RouterProvider router={appRouter}/> );

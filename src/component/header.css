@@ -27,35 +27,56 @@
     background-color: rgb(244, 186, 165);
 }
 /* body css start from here */
+.filter{
+   display: flex;
+   margin: 10px;
+   padding: 10px;
+
+}
 .search{
-    padding: 10px;
-}
-.search:hover{
-    cursor: pointer;
-}
-.rest-card{
-    /* height: 400px; */
-    width: 200px;
-    background-color: wheat;
-    padding: 5px;
+    /* display: flex; */
     margin: 10px;
+}
+.search-btn{
+    cursor: pointer;
+ 
+}
+.res-card,.shimmer-card{
+    height: 400px;
+    width: 200px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin: 20px;
     transition: box-shadow .3s;
     border-radius:10px;
     border: 1px solid #ccc;
-    float: left;
-    
+    word-wrap: break-word;  
 }
-.rest-card:hover{
-    /* border: 1px solid black; */
+.res-card:hover{
     cursor: pointer;
-    /* background-color: rgb(244, 186, 165); */
     box-shadow: 0 0 15px rgba(33,33,33,100); 
       
 }
 .res-logo{
+    margin: 5px;
     width: 100%; 
+    height: 100px;
 }
-.rest-container{
+.rest-container,.shimmer-container{
     display: flex;
     flex-wrap: wrap;  
+    
+}
+.filter-btn{
+    cursor: pointer;
+    margin: 10px;
+    /* padding: 10px; */
+
+}
+.filter-btn:hover{
+    background-color:aquamarine;
+    border-color: white;
+    border-radius: 20px;
+    border: 1px solid black;
+    box-shadow: 0 0 15px rgba(33,33,33,100);
 }

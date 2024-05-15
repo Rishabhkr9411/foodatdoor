@@ -23,6 +23,4 @@ Footer
     - Links
     - Address
     - Contact
-
-
 ```

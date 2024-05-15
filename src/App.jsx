@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Input from './component/Input1'
+// import Input from './component/Input1'
 import './App.css'
 
 

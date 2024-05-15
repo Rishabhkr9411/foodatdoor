@@ -1,37 +1,87 @@
 import React from "react";
 import './header.css';
+import ResturantCard from './RestaurantCard';
+import restaurantList from "../utils/mockData";
+import {useState,useEffect} from "react";
+import Shimmer from "./Shimmereffect";
 
 
-const ResturantCard=(props)=>{
-    return(
-        <>
-        <div className="rest-card">
-            <img className="res-logo" src={props.image} alt="" />
-            <h3>{props.resname}</h3>
-            <h5>{props.cuisinie}</h5>
-            <h5>{props.star}</h5>
-            <h5>{props.time}</h5>
-        </div>
-        </>
-    )
-}
 
-function Body() {
-    return(
+function Body () {
+    //Local State Variable -- Super powerful variable
+    const [resList,setresList]=useState([]);// this is giving array & arr[0]=resList ,arr[1]=setresList where arr=useState(restaurantList)
+    const [filterList,setfilterList]=useState([]);
+    const [search,setSearch]=useState("");
+    
+    useEffect(()=>{ 
+        fetchData();
+    },[]);
+
+    // console.log("rendered");
+    //whenever state variable update , react triggers a reconciliation cycle(re render the component)
+    const fetchData=async()=>{
+        const data= await fetch(
+            "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.4743879&lng=77.50399039999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+        );
+        const json= await data.json();
+        console.log(json);
+
+       // console.log(json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
+        setresList(json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
+        setfilterList(json.data.cards[4].card.card.gridElements.infoWithStyle.restaurants);
+        //console.log(resList);
+
+    }
+
+    //conditional rendering
+    // if(resList.length===0){
+    //     return <Shimmer/>;
+    // }
+
+
+
+    return resList.length===0?<Shimmer/>:(
         <div className="body">
-            <div className="search">
-                <button className="search">Search</button></div>
+            <div className="filter">
+                <div className="search">
+                    <input 
+                    type="text" 
+                    className="searchbox"
+                    value={search}
+                    onChange={(e)=>setSearch(e.target.value)}
+                    />
+                    <button className="search-btn"
+                    onClick={()=>{
+                        console.log(search);
+
+                        const filterRestaurant=resList.filter(
+                            (res)=>res.info.name.toLowerCase().includes(search.toLowerCase())
+                        );
+                        setfilterList(filterRestaurant);
+
+                    }}
+                    >Search</button>
+                </div>
+                <button className="filter-btn"
+                    //onclick effect
+                    onClick={() => {
+                        const filter = resList.filter(
+                            (res) => res.info.avgRating > 4
+                        );
+                        setfilterList(filter);
+                    }}  
+                >
+                    Top rated Restaurant near you
+                </button>
+            </div>
             <div className="rest-container">
-                <ResturantCard resname="KFC" cuisinie="Chicken,Fast Food" time="30 minutes" rating="4.3" image="https://upload.wikimedia.org/wikipedia/sco/thumb/b/bf/KFC_logo.svg/768px-KFC_logo.svg.png"/>
-                <ResturantCard resname="Domminos" cuisinie=" Paneer pizza, Onion Pizza,Corn Pizza" time="30 minutes" rating="4.5" image="https://media-assets.swiggy.com/swiggy/image/upload/f_auto,q_auto,fl_lossy/wjfulby1x23tpttm2dua" />
-                <ResturantCard resname="Chai Wala" cuisinie="Chai, Biscuits,Cookies" time="35 minutes" rating="4.0" image="https://i.pinimg.com/736x/5c/c1/60/5cc1603d5cafacd497f0aaa42da62be4.jpg"/>
-                <ResturantCard resname="Halwa Wala" cuisinie="Besan Halwa, Suji Halwa" time="60 minutes" rating="4.7" image="https://www.shutterstock.com/image-vector/gajar-halwa-indian-punjabi-food-600w-1617793195.jpg"/>
-                <ResturantCard resname="Amrit Sweets" cuisinie="sweets," time="40 minutes"rating="3.9"image="https://im.whatshot.in/content/2015/Aug/1439797986-sweet-shops.jpg?q=90"/>
+                {filterList.map((restaurant)=>(
+                    <ResturantCard key={restaurant.info.id} resData={restaurant}/>
+                ))}
             </div>
 
         </div>
     )
-
 }
 
 export default Body;
